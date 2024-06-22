@@ -1,11 +1,11 @@
 #!/usr/bin/python3
-
 """ Define the User class for TimeCapsule
 """
-from models.base_model import Base, BaseModel
-from sqlalchemy import Column, String, Integer
+
+
+from base_model import Base, BaseModel
+from sqlalchemy import Column, String, DateTime
 from sqlalchemy.orm import relationship
-from os import getenv
 
 
 class User(BaseModel, Base):
@@ -21,14 +21,16 @@ class User(BaseModel, Base):
       username (str): The username of the user. Must be unique.
       email (str): The email address of the user. Must be unique.
       password (str): The password of the user.
-      capsules (relationship): A relationship to the TimeCapsule class, representing the time capsules
-        owned by the user.
+      capsules (relationship): A relationship to the TimeCapsule class,
+      representing the time capsules owned by the user.
     """
-
-    _tablename_ = 'users'
-
-    id = Column(Integer, primary_key=True)
+    __tablename__ = 'users'
+    id = Column(String(250), primary_key=True)
     username = Column(String(150), unique=True, nullable=False)
     email = Column(String(150), unique=True, nullable=False)
-    password = Column(String(150), nullable=False)
-    capsules = relationship('TimeCapsule', backref='owner', lazy=True)
+    last_login = Column(DateTime, nullable=True)
+    capsules = relationship('TimeCapsule', backref='user',
+                            lazy=True, cascade='all, delete-orphan')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

@@ -3,14 +3,14 @@
 """This module defines the DBStorage class for TimeCapsule
 """
 
-import os
+
 from os import getenv
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, scoped_session, relationship
-from models.base_model import Base, BaseModel
-from models.users import User
-from models.time_capsule import TimeCapsule
-from models.content import Content
+from sqlalchemy.orm import sessionmaker, scoped_session
+from ..base_model import Base, BaseModel
+from ..user import User
+from ..time_capsule import TimeCapsule
+from ..content import Content
 
 
 class DBStorage:
@@ -23,11 +23,11 @@ class DBStorage:
         """Creates a new instance of DBStorage
         """
 
-        user = getenv("")
-        passwd = getenv("")
-        host = getenv("")
-        db = getenv("")
-        env_var = os.environ.get('')
+        user = getenv("USER")
+        passwd = getenv("PASSWORD")
+        host = getenv("HOST")
+        db = getenv("DB")
+        env_var = getenv('ENV')
 
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
                                       .format(user, passwd, host, db),

@@ -1,2 +1,4 @@
 # virtual environment
 eot_venv
+# pycache files
+__pycache__/*
