@@ -3,7 +3,7 @@
 """
 
 
-from base_model import Base, BaseModel
+from models.base_model import Base, BaseModel
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.orm import relationship
 
@@ -25,7 +25,6 @@ class User(BaseModel, Base):
       representing the time capsules owned by the user.
     """
     __tablename__ = 'users'
-    id = Column(String(250), primary_key=True)
     username = Column(String(150), unique=True, nullable=False)
     email = Column(String(150), unique=True, nullable=False)
     last_login = Column(DateTime, nullable=True)
