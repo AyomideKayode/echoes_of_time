@@ -21,5 +21,5 @@ Echoes of Time: the virtual time capsule is a web application that allows users 
 - Azure Blob Storage
 
 ## Contributors
-Abdelwadoud Makhlok ([@AbdelwadoudMakh55](https://github.com/AbdelwadoudMakh55)) 
-Ayomide Kayode ([@AyomideKayode](https://github.com/AyomideKayode)) 
+- Abdelwadoud Makhlok ([@AbdelwadoudMakh55](https://github.com/AbdelwadoudMakh55)) 
+- Ayomide Kayode ([@AyomideKayode](https://github.com/AyomideKayode)) 
