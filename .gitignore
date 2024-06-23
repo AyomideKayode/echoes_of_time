@@ -2,3 +2,5 @@
 eot_venv
 # pycache files
 __pycache__/*
+# test files
+test_db.py
