@@ -6,6 +6,7 @@
 from models.base_model import Base, BaseModel
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.orm import relationship
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User(BaseModel, Base):
