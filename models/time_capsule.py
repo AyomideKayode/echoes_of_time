@@ -3,7 +3,7 @@
 """
 
 
-from base_model import BaseModel, Base
+from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey, Boolean, DateTime, Text
 from sqlalchemy.orm import relationship
 
@@ -27,7 +27,7 @@ class TimeCapsule(BaseModel, Base):
         contents (list): The contents of the time capsule.
     """
     __tablename__ = 'time_capsules'
-    user_id = Column(String(200), ForeignKey('user.id'), nullable=False)
+    user_id = Column(String(200), ForeignKey('users.id'), nullable=False)
     title = Column(String(150), nullable=False)
     description = Column(Text, nullable=True)
     unlock_date = Column(DateTime, nullable=False)

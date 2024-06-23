@@ -5,12 +5,13 @@
 
 
 from os import getenv
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-from ..base_model import Base, BaseModel
-from ..user import User
-from ..time_capsule import TimeCapsule
-from ..content import Content
+from models.base_model import Base, BaseModel
+from models.user import User
+from models.time_capsule import TimeCapsule
+from models.content import Content
 
 
 class DBStorage:
@@ -22,7 +23,7 @@ class DBStorage:
     def __init__(self):
         """Creates a new instance of DBStorage
         """
-
+        load_dotenv()
         user = getenv("USER")
         passwd = getenv("PASSWORD")
         host = getenv("HOST")
@@ -81,7 +82,7 @@ class DBStorage:
         and create the current database session
         """
 
-        Base.metadata.create_all(self.__engine, checkfirst=False)
+        Base.metadata.create_all(self.__engine, checkfirst=True)
         session_factory = sessionmaker(bind=self.__engine,
                                        expire_on_commit=False)
         Session = scoped_session(session_factory)
