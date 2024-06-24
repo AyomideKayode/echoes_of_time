@@ -1,0 +1,7 @@
+# Requirements for the backend server for Echoes of Time
+
+Flask
+SQLAlchemy
+Flask-Cors
+firebase-admin
+azure-storage-blob
