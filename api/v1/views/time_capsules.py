@@ -6,6 +6,7 @@ from api.v1.views import app_views
 from flask import jsonify, request, abort
 from models import storage
 from models.time_capsule import TimeCapsule
+from api.firebase_config import firebase_auth
 
 
 @app_views.route('/time_capsules', methods=['GET'], strict_slashes=False)
@@ -49,6 +50,7 @@ def post_time_capsule():
 
 @app_views.route('/time_capsules/<time_capsule_id>', methods=['GET'],
                  strict_slashes=False)
+@firebase_auth
 def get_time_capsule(time_capsule_id):
     """Retrieves a TimeCapsule object"""
     time_capsule = storage.get(TimeCapsule, time_capsule_id)
