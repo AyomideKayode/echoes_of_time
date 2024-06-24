@@ -4,3 +4,5 @@ eot_venv
 __pycache__/*
 # test files
 test_db.py
+# Firebase credentials
+echoes-of-time-firebase-adminsdk-n7b6f-c93d2837c5.json
