@@ -1,25 +1,17 @@
 <!-- templates/login.html -->
-{% extends "base.html" %} {% block title %}Login{% endblock %} {% block content
-%}
-<div class="row justify-content-center">
-  <div class="col-md-6">
-    <h2 class="mt-4">Login</h2>
-    <form method="post" action="{{ url_for('auth.login') }}">
-      {{ form.hidden_tag() }}
-      <div class="form-group">
-        {{ form.email.label(class="form-label") }} {{
-        form.email(class="form-control") }}
-      </div>
-      <div class="form-group">
-        {{ form.password.label(class="form-label") }} {{
-        form.password(class="form-control") }}
-      </div>
-      <div class="form-group">
-        {{ form.remember_me(class="form-check-input") }} {{
-        form.remember_me.label(class="form-check-label") }}
-      </div>
-      <button type="submit" class="btn btn-primary">Login</button>
-    </form>
-  </div>
-</div>
+{% extends "base.html" %} {% block title %}Login{% endblock %} 
+
+{% block content %}
+<h2>Login</h2>
+<form action="{{ url_for('login') }}" method="post">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
 {% endblock %}
