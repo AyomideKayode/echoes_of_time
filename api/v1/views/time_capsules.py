@@ -10,6 +10,7 @@ from api.firebase_config import firebase_auth
 
 
 @app_views.route('/time_capsules', methods=['GET'], strict_slashes=False)
+@firebase_auth
 def get_time_capsules():
     """Retrieves the list of all TimeCapsule objects"""
     time_capsules = storage.all(TimeCapsule)
@@ -19,6 +20,7 @@ def get_time_capsules():
 
 
 @app_views.route('/time_capsules', methods=['POST'], strict_slashes=False)
+@firebase_auth
 def post_time_capsule():
     """Creates a TimeCapsule"""
     if not request.get_json():
@@ -61,6 +63,7 @@ def get_time_capsule(time_capsule_id):
 
 @app_views.route('/time_capsules/<time_capsule_id>', methods=['DELETE'],
                  strict_slashes=False)
+@firebase_auth
 def delete_time_capsule(time_capsule_id):
     """Deletes a TimeCapsule object"""
     time_capsule = storage.get(TimeCapsule, time_capsule_id)
@@ -73,6 +76,7 @@ def delete_time_capsule(time_capsule_id):
 
 @app_views.route('/time_capsules/<time_capsule_id>', methods=['PUT'],
                  strict_slashes=False)
+@firebase_auth
 def put_time_capsule(time_capsule_id):
     """Updates a TimeCapsule object"""
     time_capsule = storage.get(TimeCapsule, time_capsule_id)
