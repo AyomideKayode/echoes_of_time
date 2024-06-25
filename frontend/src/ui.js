@@ -15,24 +15,25 @@ export const divLoginError = document.querySelector('#divLoginError');
 export const lblLoginErrorMessage = document.querySelector(
   '#lblLoginErrorMessage'
 );
+export const btnGetStarted = document.querySelector('#btnGetStarted');
 
 export const showLoginForm = () => {
-  login.style.display = 'block';
-  app.style.display = 'none';
+  document.querySelector('#login').classList.remove('hidden');
+  document.querySelector('#app').classList.add('hidden');
 };
 
 export const showApp = () => {
-  login.style.display = 'none';
-  app.style.display = 'block';
+  document.querySelector('#login').classList.add('hidden');
+  document.querySelector('#app').classList.remove('hidden');
 };
 
 export const hideLoginError = () => {
-  divLoginError.style.display = 'none';
+  divLoginError.classList.add('hidden');
   lblLoginErrorMessage.innerHTML = '';
 };
 
 export const showLoginError = (error) => {
-  divLoginError.style.display = 'block';
+  divLoginError.classList.remove('hidden');
   if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
     lblLoginErrorMessage.innerHTML = `Wrong password. Try again.`;
   } else {

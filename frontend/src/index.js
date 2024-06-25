@@ -14,6 +14,7 @@ import {
   btnLogin,
   btnSignup,
   btnLogout,
+  btnGetStarted,
   lblAuthState,
 } from './ui';
 
@@ -56,6 +57,10 @@ const loginEmailPassword = async () => {
   const loginEmail = txtEmail.value;
   const loginPassword = txtPassword.value;
 
+  if (!loginEmail || !loginPassword) {
+    showLoginError({ message: 'Please fill out both fields.' });
+    return;
+  }
   // error handling
   try {
     await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
@@ -128,3 +133,12 @@ const logout = async () => {
 };
 
 btnLogout.addEventListener('click', logout);
+
+btnGetStarted.addEventListener('click', () => {
+  document.querySelector('section.intro').classList.add('hidden');
+  document.querySelector('section.features').classList.add('hidden');
+  document.querySelector('section.how-it-works').classList.add('hidden');
+  document.querySelector('section.testimonials').classList.add('hidden');
+  document.querySelector('footer').classList.add('hidden');
+  document.querySelector('#login').classList.remove('hidden');
+});
