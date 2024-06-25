@@ -7,6 +7,7 @@ from flask import jsonify, request, abort
 from models import storage
 from models.user import User
 from datetime import datetime
+from api.firebase_config import firebase_auth
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
@@ -81,6 +82,7 @@ def put_user(user_id):
 
 @app_views.route('/users/<user_id>/time_capsules', methods=['GET'],
                  strict_slashes=False)
+@firebase_auth
 def get_user_time_capsules(user_id):
     """Retrieves the list of all TimeCapsule objects of a User"""
     user = storage.get(User, user_id)
