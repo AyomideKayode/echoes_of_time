@@ -1,0 +1,25 @@
+{
+  "name": "echoes-of-time",
+  "version": "1.0.0",
+  "description": "Echoes of Time is a web application that allows users to create time capsules and send them to their friends. The time capsules are stored in a Firebase database and can be opened by the recipient at a later date.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "dotenv-webpack": "^8.1.0",
+    "firebase": "^9.0.1"
+  },
+  "devDependencies": {
+    "css-loader": "^6.3.0",
+    "html-webpack-plugin": "^5.3.2",
+    "style-loader": "^3.3.0",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0"
+  }
+}

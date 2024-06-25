@@ -1,22 +1,74 @@
 <!-- templates/index.html -->
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+{% extends "base.html" %} {% block title %}Home{% endblock %}; {% block content
 %}
-<div class="jumbotron mt-4">
-  <h1 class="display-4">Welcome to the Virtual Time Capsule</h1>
-  <p class="lead">Store your memories and messages for the future.</p>
-  <hr class="my-4" />
-  <p>Login or register to get started.</p>
-  <a
-    class="btn btn-primary btn-lg"
-    href="{{ url_for('auth.login') }}"
-    role="button"
-    >Login</a
-  >
-  <a
-    class="btn btn-secondary btn-lg"
-    href="{{ url_for('auth.register') }}"
-    role="button"
-    >Register</a
-  >
-</div>
+<section class="intro">
+  <p>Preserve Your Memories for the Future</p>
+  <button class="cta-button">Get Started Today!</button>
+</section>
+<section class="features">
+  <h2>Features</h2>
+  <div class="feature-list">
+    <div class="feature-item">
+      <h3>Personalized Capsules</h3>
+      <p>Customize your time capsule with photos, videos, and messages.</p>
+    </div>
+    <div class="feature-item">
+      <h3>Secure Storage</h3>
+      <p>Your data is safe and will only be opened when you choose.</p>
+    </div>
+    <div class="feature-item">
+      <h3>Share with Loved Ones</h3>
+      <p>Share your capsule with family and friends on the unlock date.</p>
+    </div>
+    <div class="feature-item">
+      <h3>Reminders</h3>
+      <p>Get reminders about your capsule's upcoming unlock date.</p>
+    </div>
+  </div>
+</section>
+<section class="how-it-works">
+  <h2>How It Works</h2>
+  <div class="steps">
+    <div class="step-item">
+      <h3>Sign Up</h3>
+      <p>Create an account to start your time capsule.</p>
+    </div>
+    <div class="step-item">
+      <h3>Create</h3>
+      <p>Add your messages, photos, videos, and set the unlock date.</p>
+    </div>
+    <div class="step-item">
+      <h3>Secure</h3>
+      <p>We securely store your capsule until the chosen date.</p>
+    </div>
+    <div class="step-item">
+      <h3>Unlock</h3>
+      <p>Receive a notification and enjoy your preserved memories.</p>
+    </div>
+  </div>
+</section>
+<section class="testimonials">
+  <h2>Testimonials</h2>
+  <div class="testimonial-list">
+    <blockquote class="testimonial-item">
+      <p>"A beautiful way to preserve memories for future generations!"</p>
+      <footer>— Jane Doe</footer>
+    </blockquote>
+    <blockquote class="testimonial-item">
+      <p>
+        "I love being able to look back at my memories in such a unique way."
+      </p>
+      <footer>— John Smith</footer>
+    </blockquote>
+  </div>
+</section>
+<footer>
+  <p>Stay Connected</p>
+  <div class="social-media">
+    <a href="#">Facebook</a>
+    <a href="#">Twitter</a>
+    <a href="#">Instagram</a>
+  </div>
+  <p>© 2024 Virtual Time Capsule. All rights reserved.</p>
+</footer>
 {% endblock %}
