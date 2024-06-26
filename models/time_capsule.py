@@ -6,6 +6,7 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey, Boolean, DateTime, Text
 from sqlalchemy.orm import relationship
+import uuid
 
 
 class TimeCapsule(BaseModel, Base):
@@ -40,3 +41,4 @@ class TimeCapsule(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.id = uuid.uuid4()

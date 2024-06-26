@@ -5,6 +5,7 @@
 
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey, Text
+import uuid
 
 
 class Content(BaseModel, Base):
@@ -27,3 +28,4 @@ class Content(BaseModel, Base):
 
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
+    self.id = uuid.uuid4()
