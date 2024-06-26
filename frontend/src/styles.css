@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
   --violet: rgb(109, 75, 211);
@@ -160,7 +160,7 @@ body {
   background: none;
   border: none;
   cursor: pointer;
-  z-index: 1001; /* nsure it's above the nav */
+  z-index: 1001; /* to ensure it's above the nav */
 }
 
 .hamburger.toggled {
@@ -168,31 +168,92 @@ body {
   font-size: 30px;
 }
 
+/*==========================================================================
+    Banner
+  ========================================================================== */
+
+.banner {
+  /* width: 100%; */
+  min-height: 65vh;
+  /* border: 2px solid yellowgreen; */
+  color: var(--dl-color-davy-gray);
+  background-repeat: no-repeat;
+  padding: var(--dl-space-space-threeunits) var(--dl-space-space-twounits);
+  text-align: center;
+}
+
+.banner_grid {
+  /* border: 3px solid red; */
+  max-width: var(--dl-size-size-midmaxwidth);
+  padding: var(--dl-space-space-halfunit);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--dl-space-space-oneandhalfunits);
+  align-items: center;
+  justify-content: center;
+}
+
+.banner-text {
+  font-family: 'Lora', serif;
+  max-width: 500px;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  margin-left: var(--dl-space-space-twounits);
+  flex-direction: column;
+}
+
+.banner-text h1 {
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 50px;
+}
+
+.banner-text span {
+  font-size: 35px;
+  font-family: 'Hammersmith One', sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  word-spacing: -6px;
+}
+
+.banner-text p {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.8;
+  margin-top: 15px;
+}
+
+.banner .header_btn {
+  margin-top: 15px;
+  width: 35%;
+  font-size: 18px;
+  font-family: 'Roboto Condensed', sans-serif;
+  text-align: center;
+}
+
+.banner .header_btn:hover {
+  transform: scale(1.1);
+}
+
+.banner_img img {
+  border-top-left-radius: 50px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 50px;
+  /* horizontal-offset, vertical-offset, blur-radius & color of the shadow */
+  box-shadow: 2px 5px 10px rgba(83, 224, 244, 0.8);
+}
 
 .intro {
-  padding: 60px 20px;
-  background: linear-gradient(to bottom, #6a0dad, #8a2be2);
+  padding: 30px 10px;
+  background: linear-gradient(to bottom, #6a0dad, #29bc58);
   color: #fff;
 }
 
 .intro p {
   font-size: 1.8em;
-  margin-bottom: 30px;
-}
-
-.cta-button {
-  background-color: #fff;
-  color: #6a0dad;
-  padding: 15px 30px;
-  border: none;
-  font-size: 1.2em;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-.cta-button:hover {
-  background-color: #d8b6ff;
+  margin-bottom: 15px;
 }
 
 .features,
