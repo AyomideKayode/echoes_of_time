@@ -19,7 +19,7 @@ export const btnGetStarted = document.querySelector('#btnGetStarted');
 
 export const showLoginForm = () => {
   login.style.display = 'block';
-  app.style.display = 'none';  
+  app.style.display = 'none';
 };
 
 export const showApp = () => {

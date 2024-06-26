@@ -72,8 +72,6 @@ const loginEmailPassword = async () => {
   }
 };
 
-btnLogin.addEventListener('click', loginEmailPassword);
-
 /**
  * Function to create a new account using email and password.
  * It retrieves the email and password from the input fields,
@@ -102,8 +100,6 @@ const createAccount = async () => {
   }
 };
 
-btnSignup.addEventListener('click', createAccount);
-
 /**
  * Function to monitor the authentication state of the user
  * and update the UI accordingly.
@@ -123,8 +119,6 @@ const monitorAuthState = async () => {
   });
 };
 
-monitorAuthState();
-
 /**
  * Function to handle the logout process.
  * It signs out the current user using Firebase Auth.
@@ -134,9 +128,12 @@ const logout = async () => {
   console.log(loggedOut);
 };
 
+btnLogin.addEventListener('click', loginEmailPassword);
+btnSignup.addEventListener('click', createAccount);
 btnLogout.addEventListener('click', logout);
-
 // Redirect to login/signup page when Get Started button is clicked
 btnGetStarted.addEventListener('click', () => {
-  window.location.href = './login_signup.html';
+  window.location.href = 'login_signup.html';
 });
+
+monitorAuthState();

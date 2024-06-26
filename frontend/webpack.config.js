@@ -22,6 +22,11 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
+      filename: 'index.html',
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/login_signup.html',
+      filename: 'login_signup.html',
     }),
     new Dotenv(), // for loading environment variables
   ],
