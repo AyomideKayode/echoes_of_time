@@ -16,7 +16,7 @@ import {
   btnLogin,
   btnSignup,
   btnLogout,
-  btnGetStarted,
+  // btnGetStarted,
   lblAuthState,
 } from './ui';
 
@@ -131,9 +131,13 @@ const logout = async () => {
 btnLogin.addEventListener('click', loginEmailPassword);
 btnSignup.addEventListener('click', createAccount);
 btnLogout.addEventListener('click', logout);
+
+const btnGetStarted = document.querySelector('#btnGetStarted')
 // Redirect to login/signup page when Get Started button is clicked
-btnGetStarted.addEventListener('click', () => {
-  window.location.href = 'login_signup.html';
-});
+if (btnGetStarted) {
+  btnGetStarted.addEventListener('click', () => {
+    window.location.href = 'login_signup.html';
+  });
+}
 
 monitorAuthState();

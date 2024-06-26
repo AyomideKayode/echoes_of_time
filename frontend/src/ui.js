@@ -15,7 +15,7 @@ export const divLoginError = document.querySelector('#divLoginError');
 export const lblLoginErrorMessage = document.querySelector(
   '#lblLoginErrorMessage'
 );
-export const btnGetStarted = document.querySelector('#btnGetStarted');
+// export const btnGetStarted = document.querySelector('#btnGetStarted');
 
 export const showLoginForm = () => {
   login.style.display = 'block';
