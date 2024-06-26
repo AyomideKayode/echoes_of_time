@@ -1,8 +1,10 @@
 /**
  * This file is the entry point of the Firebase application.
  * It imports necessary modules, initializes Firebase app,
- * and defines functions for handling login with email and password.
-*/
+ * and defines functions for handling login with email and password,
+ * creating a new account, monitoring the authentication state,
+ * and logging out.
+ */
 
 import './styles.css';
 import {
@@ -134,11 +136,7 @@ const logout = async () => {
 
 btnLogout.addEventListener('click', logout);
 
+// Redirect to login/signup page when Get Started button is clicked
 btnGetStarted.addEventListener('click', () => {
-  document.querySelector('section.intro').classList.add('hidden');
-  document.querySelector('section.features').classList.add('hidden');
-  document.querySelector('section.how-it-works').classList.add('hidden');
-  document.querySelector('section.testimonials').classList.add('hidden');
-  document.querySelector('footer').classList.add('hidden');
-  document.querySelector('#login').classList.remove('hidden');
+  window.location.href = './login_signup.html';
 });

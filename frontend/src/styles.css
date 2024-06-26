@@ -324,9 +324,9 @@ footer p {
   text-decoration: underline;
 }
 
-.hidden {
+/* .hidden {
   display: none;
-}
+} */
 
 /*=====================================================================
 -- derived css
@@ -394,7 +394,6 @@ label {
 }
 
 /* active */
-
 input:focus ~ label,
 input.used ~ label {
   top: -20px;
@@ -405,7 +404,6 @@ input.used ~ label {
 }
 
 /* Underline */
-
 .bar {
   position: relative;
   display: block;
@@ -432,14 +430,12 @@ input.used ~ label {
 }
 
 /* active */
-
 input:focus ~ .bar:before,
 input:focus ~ .bar:after {
   width: 50%;
 }
 
 /* Highlight */
-
 .highlight {
   position: absolute;
   height: 60%;
@@ -451,13 +447,11 @@ input:focus ~ .bar:after {
 }
 
 /* active */
-
 input:focus ~ .highlight {
   animation: inputHighlighter 0.3s ease;
 }
 
 /* Animations */
-
 @keyframes inputHighlighter {
   from {
     background: #4a89dc;
@@ -469,7 +463,6 @@ input:focus ~ .highlight {
 }
 
 /* Button */
-
 .button {
   position: relative;
   display: inline-block;
@@ -494,7 +487,6 @@ input:focus ~ .highlight {
 }
 
 /* Button modifiers */
-
 .buttonBlue {
   background: #4a89dc;
   text-shadow: 1px 1px 0 rgba(39, 110, 204, 0.5);
@@ -505,7 +497,6 @@ input:focus ~ .highlight {
 }
 
 /* Ripples container */
-
 .ripples {
   position: absolute;
   top: 0;
@@ -517,7 +508,6 @@ input:focus ~ .highlight {
 }
 
 /* Ripples circle */
-
 .ripplesCircle {
   position: absolute;
   top: 50%;
@@ -557,8 +547,8 @@ footer {
 }
 
 footer p {
-  color: #888;
   font-size: 13px;
+  opacity: 0.8;
   letter-spacing: 0.4px;
 }
 
@@ -569,7 +559,7 @@ footer a {
 }
 
 footer a:hover {
-  color: #666;
+  color: #b4df0a;
   text-decoration: underline;
 }
 
