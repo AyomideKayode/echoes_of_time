@@ -11,7 +11,7 @@ from datetime import datetime
 
 
 @app_views.route('/time_capsules', methods=['GET'], strict_slashes=False)
-@firebase_auth
+# @firebase_auth
 def get_time_capsules():
     """Retrieves the list of all TimeCapsule objects"""
     time_capsules = storage.all(TimeCapsule).values()
