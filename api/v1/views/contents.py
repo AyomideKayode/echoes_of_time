@@ -32,35 +32,25 @@ def post_content(time_capsule_id):
     time_capsule = storage.get(TimeCapsule, time_capsule_id)
     if not time_capsule:
         abort(404)
-    if not request.get_json():
-        abort(400, 'Not a JSON')
-    data = request.get_json()
-    data['capsule_id'] = time_capsule_id
-    type = data.get('type')
-    description = data.get('description')
-    if not type:
-        abort(400, 'Missing type')
+    type = request.form.get("type")
+    description = request.form.get("description")
+    if not type or type not in ['image', 'video', 'audio', 'text']:
+        abort(400, 'Missing type or Invalid Type')
     if not description:
         abort(400, 'Missing description')
-    if type not in ['image', 'video', 'audio', 'text']:
-        abort(400, 'Invalid type')
     if 'file' not in request.files:
         abort(400, 'No file part')
     file = request.files['file']
     if file.filename == '':
         abort(400, 'No selected file')
-    folder_name = time_capsule_id
+    data = {"type": type, "description": description, "capsule_id": time_capsule_id}
     file_name = file.filename
-    os.mkdir(folder_name)
-    absolute_path = os.path.join(folder_name, file_name)
+    absolute_path = os.path.join(time_capsule_id, file_name)
     connect_str = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
     blob_service_client = BlobServiceClient.from_connection_string(connect_str)
     blob_client = blob_service_client.get_blob_client(container='data', blob=absolute_path)
-    with open(absolute_path, 'rb') as file:
-        blob_client.upload_blob(file)
+    blob_client.upload_blob(file)
     data['uri'] = blob_client.url
-    os.remove(absolute_path)
-    os.rmdir(folder_name)
     content = Content(**data)
     content.save()
     return jsonify(content.to_dict()), 201
