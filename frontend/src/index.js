@@ -28,6 +28,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   connectAuthEmulator,
+  sendEmailVerification,
 } from 'firebase/auth';
 
 // import 'dotenv/config'; // Load environment variables from a .env file into process.env
@@ -94,6 +95,11 @@ const createAccount = async () => {
       password
     );
     console.log(`User created: ${userCred.user.email}`);
+
+    // send email verification
+    await sendEmailVerification(auth.currentUser);
+    console.log('Verification email sent.');
+    alert('Verification email sent. Please verify your email.');
   } catch (error) {
     console.log(`There was an error: ${error}`);
     showLoginError(error);
@@ -132,7 +138,7 @@ btnLogin.addEventListener('click', loginEmailPassword);
 btnSignup.addEventListener('click', createAccount);
 btnLogout.addEventListener('click', logout);
 
-const btnGetStarted = document.querySelector('#btnGetStarted')
+const btnGetStarted = document.querySelector('#btnGetStarted');
 // Redirect to login/signup page when Get Started button is clicked
 if (btnGetStarted) {
   btnGetStarted.addEventListener('click', () => {
