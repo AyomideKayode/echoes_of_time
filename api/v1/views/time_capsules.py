@@ -7,16 +7,16 @@ from flask import jsonify, request, abort
 from models import storage
 from models.time_capsule import TimeCapsule
 from api.firebase_config import firebase_auth
+from datetime import datetime
 
 
 @app_views.route('/time_capsules', methods=['GET'], strict_slashes=False)
 @firebase_auth
 def get_time_capsules():
     """Retrieves the list of all TimeCapsule objects"""
-    time_capsules = storage.all(TimeCapsule)
-    time_capsules = time_capsules.values()
-    time_capsules = [time_capsule.to_dict() for time_capsule in time_capsules]
-    return jsonify(time_capsules)
+    time_capsules = storage.all(TimeCapsule).values()
+    public_time_capsules = [tc.to_dict() for tc in time_capsules if tc.visibility]
+    return jsonify(public_time_capsules)
 
 
 @app_views.route('/time_capsules', methods=['POST'], strict_slashes=False)
@@ -32,7 +32,6 @@ def post_time_capsule():
     unlock_date = data.get('unlock_date')
     status = data.get('status')
     visibility = data.get('visibility')
-
     if not user_id:
         abort(400, 'Missing user_id')
     if not title:
@@ -41,10 +40,13 @@ def post_time_capsule():
         abort(400, 'Missing description')
     if not unlock_date:
         abort(400, 'Missing unlock_date')
-    if not status:
+    if status is None:
         abort(400, 'Missing status')
-    if not visibility:
+    if visibility is None:
         abort(400, 'Missing visibility')
+    # Need to handle the date format
+    date_strFormat = '%Y-%m-%dT%H:%M:%SZ'
+    data['unlock_date'] = datetime.strptime(data['unlock_date'], date_strFormat)
     time_capsule = TimeCapsule(**data)
     time_capsule.save()
     return jsonify(time_capsule.to_dict()), 201
