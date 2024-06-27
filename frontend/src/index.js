@@ -1,8 +1,10 @@
 /**
  * This file is the entry point of the Firebase application.
  * It imports necessary modules, initializes Firebase app,
- * and defines functions for handling login with email and password.
-*/
+ * and defines functions for handling login with email and password,
+ * creating a new account, monitoring the authentication state,
+ * and logging out.
+ */
 
 import './styles.css';
 import {
@@ -14,7 +16,7 @@ import {
   btnLogin,
   btnSignup,
   btnLogout,
-  btnGetStarted,
+  // btnGetStarted,
   lblAuthState,
 } from './ui';
 
@@ -26,6 +28,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   connectAuthEmulator,
+  sendEmailVerification,
 } from 'firebase/auth';
 
 // import 'dotenv/config'; // Load environment variables from a .env file into process.env
@@ -70,8 +73,6 @@ const loginEmailPassword = async () => {
   }
 };
 
-btnLogin.addEventListener('click', loginEmailPassword);
-
 /**
  * Function to create a new account using email and password.
  * It retrieves the email and password from the input fields,
@@ -94,13 +95,16 @@ const createAccount = async () => {
       password
     );
     console.log(`User created: ${userCred.user.email}`);
+
+    // send email verification
+    await sendEmailVerification(auth.currentUser);
+    console.log('Verification email sent.');
+    alert('Verification email sent. Please verify your email.');
   } catch (error) {
     console.log(`There was an error: ${error}`);
     showLoginError(error);
   }
 };
-
-btnSignup.addEventListener('click', createAccount);
 
 /**
  * Function to monitor the authentication state of the user
@@ -121,8 +125,6 @@ const monitorAuthState = async () => {
   });
 };
 
-monitorAuthState();
-
 /**
  * Function to handle the logout process.
  * It signs out the current user using Firebase Auth.
@@ -132,13 +134,16 @@ const logout = async () => {
   console.log(loggedOut);
 };
 
+btnLogin.addEventListener('click', loginEmailPassword);
+btnSignup.addEventListener('click', createAccount);
 btnLogout.addEventListener('click', logout);
 
-btnGetStarted.addEventListener('click', () => {
-  document.querySelector('section.intro').classList.add('hidden');
-  document.querySelector('section.features').classList.add('hidden');
-  document.querySelector('section.how-it-works').classList.add('hidden');
-  document.querySelector('section.testimonials').classList.add('hidden');
-  document.querySelector('footer').classList.add('hidden');
-  document.querySelector('#login').classList.remove('hidden');
-});
+const btnGetStarted = document.querySelector('#btnGetStarted');
+// Redirect to login/signup page when Get Started button is clicked
+if (btnGetStarted) {
+  btnGetStarted.addEventListener('click', () => {
+    window.location.href = 'login_signup.html';
+  });
+}
+
+monitorAuthState();
