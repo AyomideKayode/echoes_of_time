@@ -1,15 +1,17 @@
 #!/usr/bin/python3
 """Contents view module"""
 
-
+import os
 from api.v1.views import app_views
 from flask import jsonify, request, abort
 from models import storage
 from models.content import Content
 from models.time_capsule import TimeCapsule
 from api.firebase_config import firebase_auth
+from azure.storage.blob import BlobServiceClient
+from dotenv import load_dotenv
 
-
+load_dotenv()
 @app_views.route('/time_capsules/<time_capsule_id>/contents', methods=['GET'],
                  strict_slashes=False)
 @firebase_auth
@@ -33,10 +35,32 @@ def post_content(time_capsule_id):
     if not request.get_json():
         abort(400, 'Not a JSON')
     data = request.get_json()
-    capsule_id = data.get('capsule_id')
+    data['capsule_id'] = time_capsule_id
     type = data.get('type')
     description = data.get('description')
-    # uri should be created here
+    if not type:
+        abort(400, 'Missing type')
+    if not description:
+        abort(400, 'Missing description')
+    if type not in ['image', 'video', 'audio', 'text']:
+        abort(400, 'Invalid type')
+    if 'file' not in request.files:
+        abort(400, 'No file part')
+    file = request.files['file']
+    if file.filename == '':
+        abort(400, 'No selected file')
+    folder_name = time_capsule_id
+    file_name = file.filename
+    os.mkdir(folder_name)
+    absolute_path = os.path.join(folder_name, file_name)
+    connect_str = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
+    blob_service_client = BlobServiceClient.from_connection_string(connect_str)
+    blob_client = blob_service_client.get_blob_client(container='data', blob=absolute_path)
+    with open(absolute_path, 'rb') as file:
+        blob_client.upload_blob(file)
+    data['uri'] = blob_client.url
+    os.remove(absolute_path)
+    os.rmdir(folder_name)
     content = Content(**data)
     content.save()
     return jsonify(content.to_dict()), 201
