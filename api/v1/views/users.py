@@ -26,8 +26,10 @@ def post_user():
     if not request.get_json():
         abort(400, 'Not a JSON')
     data = request.get_json()
+    print('Received JSON data:', data)  # Log the received JSON data
     id = data.get('id')
-    username = data.get('username')
+    # Derive username from email if missing
+    username = data.get('username', data.get('email').split('@')[0])
     email = data.get('email')
     last_login = data.get('last_login')
 

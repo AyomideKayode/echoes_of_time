@@ -101,18 +101,29 @@ const createAccount = async () => {
     console.log('Verification email sent.');
     alert('Verification email sent. Please verify your email.');
 
+    // format last_login to match the backend format
+    const lastLogin = new Date().toISOString().split('.')[0] + 'Z';
+    // hardcode username to be first part of email before '@'
+    const userName = email.split('@')[0];
+
+    // Prepare the POST request data
+    const postData = {
+      id: userCred.user.uid,
+      username: userName,
+      email: email,
+      last_login: lastLogin,
+    };
+
+    console.log('Sending POST request with data:', postData);
+
     // Send a POST request to the backend
-    const response = await fetch('http://127.0.0.1:5000/users', {
+    const response = await fetch('http://127.0.0.1:5000/api/v1/users', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-API-KEY': 'do7LbFip25AwEBXJbkT31bpmjX5l3kQym4YHbe5a',
       },
-      body: JSON.stringify({
-        email: email,
-        uid: userCred.user.uid,
-        last_login: new Date().toISOString(),
-      }),
+      body: JSON.stringify(postData),
     });
 
     if (response.ok) {
