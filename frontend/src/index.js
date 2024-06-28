@@ -100,6 +100,28 @@ const createAccount = async () => {
     await sendEmailVerification(auth.currentUser);
     console.log('Verification email sent.');
     alert('Verification email sent. Please verify your email.');
+
+    // Send a POST request to the backend
+    const response = await fetch('http://127.0.0.1:5000/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': 'do7LbFip25AwEBXJbkT31bpmjX5l3kQym4YHbe5a',
+      },
+      body: JSON.stringify({
+        email: email,
+        uid: userCred.user.uid,
+        last_login: new Date().toISOString(),
+      }),
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      console.log('User saved to backend:', result);
+    } else {
+      const error = await response.json();
+      console.error('Error saving user to backend:', error);
+    }
   } catch (error) {
     console.log(`There was an error: ${error}`);
     showLoginError(error);
