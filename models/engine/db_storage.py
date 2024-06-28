@@ -1,6 +1,13 @@
 #!/usr/bin/python3
 
-"""This module defines the DBStorage class for TimeCapsule
+"""Module that defines the DBStorage class for TimeCapsule
+Contains the implementation of the DBStorage class, which manages
+the storage of timecapsule models in a MySQL database.
+It provides methods for querying, adding, deleting,
+and saving objects to the database.
+
+Classes:
+- DBStorage: Manages storage of timecapsule models in a MySQL database.
 """
 
 
