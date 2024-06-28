@@ -25,11 +25,15 @@ class DBStorage:
         """Creates a new instance of DBStorage
         """
         load_dotenv()
-        user = getenv("USER")
+        user = getenv("DB_USER")
         passwd = getenv("PASSWORD")
         host = getenv("HOST")
         db = getenv("DB")
         env_var = getenv('ENV')
+
+        # print(
+        #     f"User: {user}, Password: {passwd}, Host: {host}, DB: {db}, Env: {env_var}")
+        # print statement for debugging MySQL connection issue
 
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
                                       .format(user, passwd, host, db),
