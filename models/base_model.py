@@ -13,7 +13,7 @@ Base = declarative_base()
 
 
 class BaseModel:
-    """A base class for all hbnb models
+    """A base class for all time capsule models
     """
 
     id = Column(String(200), nullable=False, primary_key=True)
@@ -21,7 +21,7 @@ class BaseModel:
     updated_at = Column(DateTime, nullable=False, default=datetime.now())
 
     def __init__(self, *args, **kwargs):
-        """Instatntiates a new model
+        """Instantiates a new model
         """
         if not kwargs:
             self.id = str(uuid.uuid4())
