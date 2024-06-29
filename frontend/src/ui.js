@@ -5,6 +5,7 @@ export const txtPassword = document.querySelector('#txtPassword');
 
 export const btnLogin = document.querySelector('#btnLogin');
 export const btnSignup = document.querySelector('#btnSignup');
+export const btnGoogle = document.querySelector('#btnGoogle');
 
 export const btnLogout = document.querySelector('#btnLogout');
 

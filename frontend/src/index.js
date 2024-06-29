@@ -4,7 +4,7 @@
  * and defines functions for handling login with email and password,
  * creating a new account, monitoring the authentication state,
  * and logging out.
-*/
+ */
 
 import './styles.css';
 import { config } from 'dotenv';
@@ -18,6 +18,7 @@ import {
   showLoginError,
   btnLogin,
   btnSignup,
+  btnGoogle,
   btnLogout,
   // btnGetStarted,
   lblAuthState,
@@ -32,6 +33,8 @@ import {
   signInWithEmailAndPassword,
   connectAuthEmulator,
   sendEmailVerification,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from 'firebase/auth';
 
 const firebaseApp = initializeApp({
@@ -50,6 +53,7 @@ const auth = getAuth(firebaseApp); // initialize Firebase Auth
 // to start the Auth Emulator. And we connect to it using the port provided in the terminal.
 // every signup and login done will only reflect in the emulator and not in the Firebase console.
 // connectAuthEmulator(auth, 'http://localhost:9099'); // connect to the Auth Emulator
+const googleProvider = new GoogleAuthProvider(); // initialize Google Auth Provider
 
 /**
  * Function to handle login with email and password.
@@ -170,9 +174,27 @@ const logout = async () => {
   console.log(loggedOut);
 };
 
+/**
+ * Function to handle Google sign-in.
+ * It uses the GoogleAuthProvider to sign in with a popup
+ * and handles any errors that occur during the process.
+ */
+const loginWithGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    const user = result.user;
+    showApp();
+    showLoginState(user);
+  } catch (error) {
+    console.log(`There was an error: ${error}`);
+    showLoginError(error);
+  }
+};
+
 btnLogin.addEventListener('click', loginEmailPassword);
 btnSignup.addEventListener('click', createAccount);
 btnLogout.addEventListener('click', logout);
+btnGoogle.addEventListener('click', loginWithGoogle);
 
 const btnGetStarted = document.querySelector('#btnGetStarted');
 // Redirect to login/signup page when Get Started button is clicked
