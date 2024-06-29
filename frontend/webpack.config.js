@@ -11,11 +11,25 @@ module.exports = {
     filename: 'bundle.js',
   },
   watch: true,
+  resolve: {
+    fallback: {
+      path: require.resolve('path-browserify'),
+      crypto: require.resolve('crypto-browserify'),
+      buffer: require.resolve('buffer/'),
+      stream: require.resolve('stream-browserify'),
+      os: require.resolve('os-browserify/browser'),
+      vm: require.resolve('vm-browserify'),
+    },
+  },
   module: {
     rules: [
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif|svg)$/i,
+        type: 'asset/resource',
       },
     ],
   },
@@ -28,6 +42,6 @@ module.exports = {
       template: './src/login_signup.html',
       filename: 'login_signup.html',
     }),
-    new Dotenv(), // for loading environment variables
+    new Dotenv({ systemvars: true }), // for loading environment variables
   ],
 };

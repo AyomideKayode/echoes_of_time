@@ -4,9 +4,11 @@
  * and defines functions for handling login with email and password,
  * creating a new account, monitoring the authentication state,
  * and logging out.
- */
+*/
 
 import './styles.css';
+import { config } from 'dotenv'; // Load environment variables from a .env file into process.env
+config();
 import {
   hideLoginError,
   showLoginState,
@@ -31,16 +33,15 @@ import {
   sendEmailVerification,
 } from 'firebase/auth';
 
-// import 'dotenv/config'; // Load environment variables from a .env file into process.env
 
 const firebaseApp = initializeApp({
-  apiKey: 'AIzaSyDtV79_VTs8QrdXfYz5ksicOVg3I54S6LQ',
-  authDomain: 'echoes-of-time.firebaseapp.com',
-  projectId: 'echoes-of-time',
-  storageBucket: 'echoes-of-time.appspot.com',
-  messagingSenderId: '976641569266',
-  appId: '1:976641569266:web:90e6ea36c23a82b4c7fb6b',
-  measurementId: 'G-0FJR017M90',
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 });
 
 const auth = getAuth(firebaseApp); // initialize Firebase Auth
@@ -100,6 +101,41 @@ const createAccount = async () => {
     await sendEmailVerification(auth.currentUser);
     console.log('Verification email sent.');
     alert('Verification email sent. Please verify your email.');
+
+    // format last_login to match the backend format
+    const lastLogin = new Date().toISOString().split('.')[0] + 'Z';
+    // hardcode username to be first part of email before '@'
+    const userName = email.split('@')[0];
+    // get the API key from the environment variables
+    const xApiKey = process.env.X_API_KEY;
+
+    // Prepare the POST request data
+    const postData = {
+      id: userCred.user.uid,
+      username: userName,
+      email: email,
+      last_login: lastLogin,
+    };
+
+    console.log('Sending POST request with data:', postData);
+
+    // Send a POST request to the backend
+    const response = await fetch('http://127.0.0.1:5000/api/v1/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': xApiKey,
+      },
+      body: JSON.stringify(postData),
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      console.log('User saved to backend:', result);
+    } else {
+      const error = await response.json();
+      console.error('Error saving user to backend:', error);
+    }
   } catch (error) {
     console.log(`There was an error: ${error}`);
     showLoginError(error);
