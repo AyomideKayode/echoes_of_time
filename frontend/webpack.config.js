@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack'); // to access built-in plugins
 const Dotenv = require('dotenv-webpack'); // for loading environment variables
 
 module.exports = {
@@ -11,6 +12,17 @@ module.exports = {
     filename: 'bundle.js',
   },
   watch: true,
+  resolve: {
+    fallback: {
+      path: require.resolve('path-browserify'),
+      crypto: require.resolve('crypto-browserify'),
+      buffer: require.resolve('buffer/'),
+      stream: require.resolve('stream-browserify'),
+      os: require.resolve('os-browserify/browser'),
+      vm: require.resolve('vm-browserify'),
+      process: require.resolve('process/browser'),
+    },
+  },
   module: {
     rules: [
       {
@@ -28,6 +40,9 @@ module.exports = {
       template: './src/login_signup.html',
       filename: 'login_signup.html',
     }),
-    new Dotenv(), // for loading environment variables
+    new Dotenv({ systemvars: true }), // for loading environment variables
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
   ],
 };

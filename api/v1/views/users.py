@@ -26,8 +26,10 @@ def post_user():
     if not request.get_json():
         abort(400, 'Not a JSON')
     data = request.get_json()
+    print('Received JSON data:', data)  # Log the received JSON data
     id = data.get('id')
-    username = data.get('username')
+    # Derive username from email if missing
+    username = data.get('username', data.get('email').split('@')[0])
     email = data.get('email')
     last_login = data.get('last_login')
 
@@ -42,7 +44,8 @@ def post_user():
     # Need to handle time format !!!
     date_strFormat = '%Y-%m-%dT%H:%M:%SZ'
     try:
-        data['last_login'] = datetime.strptime(data['last_login'], date_strFormat)
+        data['last_login'] = datetime.strptime(
+            data['last_login'], date_strFormat)
     except ValueError:
         abort(400, 'Invalid last_login format')
     user = User(**data)
