@@ -56,6 +56,48 @@ const auth = getAuth(firebaseApp); // initialize Firebase Auth
 const googleProvider = new GoogleAuthProvider(); // initialize Google Auth Provider
 
 /**
+ * Helper function to format user data and send it to the backend
+ * @param {Object} user - The user object from Firebase Auth.
+ * @param {String} email - The user email.
+ */
+const saveUserToBackend = async (user, email) => {
+  // format last_login to match the backend format
+  const lastLogin = new Date().toISOString().split('.')[0] + 'Z';
+  // hardcode username to be the first part of the email before the @ symbol
+  const userName = email.split('@')[0];
+  // env variable for the API key
+  const xApiKey = process.env.X_API_KEY;
+
+  // prepare the POST data request to the backend
+  const postData = {
+    id: user.uid,
+    username: userName,
+    email: email,
+    last_login: lastLogin,
+  };
+
+  console.log('Sending POST request to backend with data:', postData);
+
+  // Send a POST request to the backend
+  const response = await fetch('http://127.0.0.1:5000/api/v1/users', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-API-KEY': xApiKey,
+    },
+    body: JSON.stringify(postData),
+  });
+
+  if (response.ok) {
+    const result = await response.json();
+    console.log('User saved to backend:', result);
+  } else {
+    const error = await response.json();
+    console.error('Error saving user to backend:', error);
+  }
+};
+
+/**
  * Function to handle login with email and password.
  * It retrieves the email and password from the input fields,
  * attempts to sign in using Firebase Auth,
@@ -106,40 +148,8 @@ const createAccount = async () => {
     console.log('Verification email sent.');
     alert('Verification email sent. Please verify your email.');
 
-    // format last_login to match the backend format
-    const lastLogin = new Date().toISOString().split('.')[0] + 'Z';
-    // hardcode username to be the first part of the email before the @ symbol
-    const userName = email.split('@')[0];
-    // env variable for the API key
-    const xApiKey = process.env.X_API_KEY;
-
-    // prepare the POST data request to the backend
-    const postData = {
-      id: userCred.user.uid,
-      username: userName,
-      email: email,
-      last_login: lastLogin,
-    };
-
-    console.log('Sending POST request to backend with data:', postData);
-
-    // Send a POST request to the backend
-    const response = await fetch('http://127.0.0.1:5000/api/v1/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-API-KEY': xApiKey,
-      },
-      body: JSON.stringify(postData),
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      console.log('User saved to backend:', result);
-    } else {
-      const error = await response.json();
-      console.error('Error saving user to backend:', error);
-    }
+    // save user to backend
+    await saveUserToBackend(userCred.user, email);
   } catch (error) {
     console.log(`There was an error: ${error}`);
     showLoginError(error);
@@ -183,8 +193,11 @@ const loginWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
     const user = result.user;
-    showApp();
+    showApp(); // show app and update UI
     showLoginState(user);
+
+    // save user to backend
+    await saveUserToBackend(user, user.email);
   } catch (error) {
     console.log(`There was an error: ${error}`);
     showLoginError(error);
