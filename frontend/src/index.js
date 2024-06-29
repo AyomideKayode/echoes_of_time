@@ -7,8 +7,9 @@
 */
 
 import './styles.css';
-import { config } from 'dotenv'; // Load environment variables from a .env file into process.env
-config();
+import { config } from 'dotenv';
+config(); // Load environment variables from a .env file into process.env
+import process from 'process/browser'; // polyfill for process.browser
 import {
   hideLoginError,
   showLoginState,
@@ -32,7 +33,6 @@ import {
   connectAuthEmulator,
   sendEmailVerification,
 } from 'firebase/auth';
-
 
 const firebaseApp = initializeApp({
   apiKey: process.env.FIREBASE_API_KEY,
@@ -104,12 +104,12 @@ const createAccount = async () => {
 
     // format last_login to match the backend format
     const lastLogin = new Date().toISOString().split('.')[0] + 'Z';
-    // hardcode username to be first part of email before '@'
+    // hardcode username to be the first part of the email before the @ symbol
     const userName = email.split('@')[0];
-    // get the API key from the environment variables
+    // env variable for the API key
     const xApiKey = process.env.X_API_KEY;
 
-    // Prepare the POST request data
+    // prepare the POST data request to the backend
     const postData = {
       id: userCred.user.uid,
       username: userName,
@@ -117,7 +117,7 @@ const createAccount = async () => {
       last_login: lastLogin,
     };
 
-    console.log('Sending POST request with data:', postData);
+    console.log('Sending POST request to backend with data:', postData);
 
     // Send a POST request to the backend
     const response = await fetch('http://127.0.0.1:5000/api/v1/users', {

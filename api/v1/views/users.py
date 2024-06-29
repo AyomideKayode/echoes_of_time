@@ -44,7 +44,8 @@ def post_user():
     # Need to handle time format !!!
     date_strFormat = '%Y-%m-%dT%H:%M:%SZ'
     try:
-        data['last_login'] = datetime.strptime(data['last_login'], date_strFormat)
+        data['last_login'] = datetime.strptime(
+            data['last_login'], date_strFormat)
     except ValueError:
         abort(400, 'Invalid last_login format')
     user = User(**data)
