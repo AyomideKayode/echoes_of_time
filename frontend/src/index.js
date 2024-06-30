@@ -114,6 +114,7 @@ const loginEmailPassword = async () => {
   // error handling
   try {
     await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+    window.location.href = 'home.html';
   } catch (error) {
     console.log(`There was an error: ${error}`);
     showLoginError(error);
@@ -150,6 +151,7 @@ const createAccount = async () => {
 
     // save user to backend
     await saveUserToBackend(userCred.user, email);
+    window.location.href = 'home.html';
   } catch (error) {
     console.log(`There was an error: ${error}`);
     showLoginError(error);
@@ -162,15 +164,16 @@ const createAccount = async () => {
  */
 const monitorAuthState = async () => {
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log(user);
-      showApp();
-      showLoginState(user);
-
-      hideLoginError();
-    } else {
-      showLoginForm();
-      lblAuthState.innerHTML = 'You are not logged in.';
+    try {
+      if (user) {
+        console.log(user);
+        showLoginState(user);
+        // showApp();
+        // hideLoginError();
+      }
+    } catch (error) {
+      console.log(`There was an error: ${error}`);
+      showLoginError(error);
     }
   });
 };
@@ -179,10 +182,10 @@ const monitorAuthState = async () => {
  * Function to handle the logout process.
  * It signs out the current user using Firebase Auth.
  */
-const logout = async () => {
-  const loggedOut = await signOut(auth);
-  console.log(loggedOut);
-};
+// const logout = async () => {
+//   const loggedOut = await signOut(auth);
+//   console.log(loggedOut);
+// };
 
 /**
  * Function to handle Google sign-in.
@@ -193,11 +196,12 @@ const loginWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
     const user = result.user;
-    showApp(); // show app and update UI
-    showLoginState(user);
+    // showApp(); // show app and update UI
+    // showLoginState(user);
 
     // save user to backend
     await saveUserToBackend(user, user.email);
+    window.location.href = 'home.html';
   } catch (error) {
     console.log(`There was an error: ${error}`);
     showLoginError(error);
@@ -206,7 +210,7 @@ const loginWithGoogle = async () => {
 
 btnLogin.addEventListener('click', loginEmailPassword);
 btnSignup.addEventListener('click', createAccount);
-btnLogout.addEventListener('click', logout);
+// btnLogout.addEventListener('click', logout);
 btnGoogle.addEventListener('click', loginWithGoogle);
 
 const btnGetStarted = document.querySelector('#btnGetStarted');

@@ -8,6 +8,7 @@ export const btnSignup = document.querySelector('#btnSignup');
 export const btnGoogle = document.querySelector('#btnGoogle');
 
 export const btnLogout = document.querySelector('#btnLogout');
+console.log('btnLogout in ui.js:', btnLogout);
 
 export const divAuthState = document.querySelector('#divAuthState');
 export const lblAuthState = document.querySelector('#lblAuthState');
@@ -20,7 +21,7 @@ export const lblLoginErrorMessage = document.querySelector(
 
 export const showLoginForm = () => {
   login.style.display = 'block';
-  app.style.display = 'none';
+  // app.style.display = 'none';
 };
 
 export const showApp = () => {
