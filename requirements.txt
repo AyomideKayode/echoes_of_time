@@ -2,6 +2,8 @@
 
 Flask
 SQLAlchemy
+mysqlclient
 Flask-Cors
 firebase-admin
 azure-storage-blob
+python-dotenv
