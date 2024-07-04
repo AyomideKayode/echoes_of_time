@@ -71,15 +71,18 @@ This file serves as the entry point of the Firebase application. It initializes 
 
 - Key Functions:
 
+  - `saveUserToBackend`: Helper function that handles formatting the user data and sending it to the backend.
   - `loginEmailPassword`: Handles login with email and password.
   - `createAccount`: Creates a new user account and sends a verification email.
   - `monitorAuthState`: Monitors the authentication state and updates the UI.
   - `logout`: Handles user logout.
+  - `loginWithGoogle`: Handles Google Sign-In for users who prefer to use their Google accounts.
 
 - Event Listeners:
 
   - `btnLogin`: Triggers the loginEmailPassword function.
   - `btnSignup`: Triggers the createAccount function.
+  - `btnGoogle`: Triggers the loginWithGoogle funtion.
   - `btnLogout`: Triggers the logout function.
   - `btnGetStarted`: Redirects to the login/signup page.
 

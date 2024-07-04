@@ -6,10 +6,13 @@ const Dotenv = require('dotenv-webpack'); // for loading environment variables
 module.exports = {
   mode: 'development',
   devtool: 'eval-source-map',
-  entry: './src/index.js',
+  entry: {
+    index: './src/index.js',
+    home: './src/home.js',
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: '[name].bundle.js', // [name] is replaced by the key in the entry object
   },
   watch: true,
   resolve: {
@@ -38,11 +41,18 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
+      chunks: ['index'], // associate this html file with the index bundle
       filename: 'index.html',
     }),
     new HtmlWebpackPlugin({
       template: './src/login_signup.html',
+      chunks: ['index'], // associate this html file with the index bundle
       filename: 'login_signup.html',
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/home.html',
+      chunks: ['home'], //  associate this html file with the home bundle
+      filename: 'home.html',
     }),
     new Dotenv({ systemvars: true }), // for loading environment variables
     new webpack.ProvidePlugin({
