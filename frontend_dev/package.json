@@ -1,0 +1,21 @@
+{
+  "name": "frontend_dev",
+  "version": "1.0.0",
+  "description": "Echoes of Time is a web application that allows users to create time capsules and send them to their friends. The time capsules are stored in a Firebase database and can be opened by the recipient at a later date.",
+  "main": "index.js",
+  "scripts": {
+    "start": "live-server --port=8080",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "firebase": "^9.0.1",
+    "process": "^0.11.10"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
